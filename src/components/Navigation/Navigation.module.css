@@ -1,0 +1,16 @@
+.link {
+  display: inline-block;
+  padding: 20px 0;
+  font-weight: 700;
+  font-size: 20px;
+  color: blue;
+}
+
+.activeLink {
+  /* composes: link; */
+  color: blueviolet;
+}
+
+.link:not(:last-child) {
+  margin-right: 30px;
+}

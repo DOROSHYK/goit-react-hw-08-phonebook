@@ -1,57 +1,73 @@
 import axios from 'axios';
-import contactsActions from './contacts-actions';
-import { infoNotify, warnNotify } from '../../services/tostify';
+import {
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
+  addContactRequest,
+  addContactSuccess,
+  addContactError,
+  deleteContactRequest,
+  deleteContactSuccess,
+  deleteContactError,
+} from './contacts-actions';
+import { toast } from 'react-toastify';
 
-export const fetchContacts = () => async dispatch => {
-  dispatch(contactsActions.fetchContactsRequest());
+export const fetchContacts = () => dispatch => {
+  dispatch(fetchContactsRequest());
 
-  try {
-    const { data } = await axios.get('/contacts');
+  axios
+    .get('/contacts')
+    .then(({ data }) => dispatch(fetchContactsSuccess(data)))
+    .catch(error => {
+      dispatch(fetchContactsError(error));
 
-    dispatch(contactsActions.fetchContactsSuccess(data));
-  } catch (error) {
-    dispatch(contactsActions.fetchContactsError(error.massage));
-    warnNotify(error.message);
-  }
+      if (error.response.status === 404) {
+        toast.info("There is no such user's collection!");
+      } else if (error.response.status === 500) {
+        toast.error('Oops! Server error! Please try later!');
+      } else {
+        toast.error('Something went wrong! Please reload the page!');
+      }
+    });
 };
 
-export const addContact = (name, number) => async dispatch => {
-  const contact = { name, number };
-  dispatch(contactsActions.addContactsRequest());
-  infoNotify('Запись добавлена');
+export const addContact = (name, number) => dispatch => {
+  const contact = {
+    name,
+    number,
+  };
 
-  try {
-    const { data } = await axios.post('/contacts', contact);
+  dispatch(addContactRequest());
 
-    dispatch(contactsActions.addContactsSuccess(data));
-  } catch (error) {
-    dispatch(contactsActions.addContactsError(error.massage));
-    warnNotify(error.message);
-  }
+  axios
+    .post('/contacts', contact)
+    .then(({ data }) => dispatch(addContactSuccess(data)))
+    .catch(error => {
+      dispatch(addContactError(error));
+
+      if (error.response.status === 400) {
+        toast.error('Contact creation error!');
+      } else {
+        toast.error('Something went wrong! Please reload the page!');
+      }
+    });
 };
 
-export const deleteContacts = id => async dispatch => {
-  dispatch(contactsActions.deleteContactsRequest());
+export const deleteContact = contactId => dispatch => {
+  dispatch(deleteContactRequest());
 
-  try {
-    await axios.delete(`/contacts/${id}`);
+  axios
+    .delete(`/contacts/${contactId}`)
+    .then(() => dispatch(deleteContactSuccess(contactId)))
+    .catch(error => {
+      dispatch(deleteContactError(error));
 
-    dispatch(contactsActions.deleteContactsSuccess(id));
-  } catch (error) {
-    dispatch(contactsActions.deleteContactsError(error.massage));
-    warnNotify(error.message);
-  }
-};
-
-export const editContacts = (id, update) => async dispatch => {
-  dispatch(contactsActions.editContactsRequest());
-
-  try {
-    const { data } = await axios.patch(`/contacts/${id}`, update);
-    console.log(data);
-    dispatch(contactsActions.editContactsSuccess(data));
-  } catch (error) {
-    dispatch(contactsActions.editContactsError(error.massage));
-    warnNotify(error.message);
-  }
+      if (error.response.status === 404) {
+        toast.info("There is no such user's collection!");
+      } else if (error.response.status === 500) {
+        toast.error('Oops! Server error! Please try later!');
+      } else {
+        toast.error('Something went wrong! Please reload the page!');
+      }
+    });
 };

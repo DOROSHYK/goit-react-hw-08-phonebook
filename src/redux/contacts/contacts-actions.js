@@ -1,36 +1,28 @@
 import { createAction } from '@reduxjs/toolkit';
 
-const changeFilter = createAction('contacts/changeFilter');
+import {
+  FETCH_CONTACTS_REQUEST,
+  FETCH_CONTACTS_SUCCESS,
+  FETCH_CONTACTS_ERROR,
+  ADD_CONTACT_REQUEST,
+  ADD_CONTACT_SUCCESS,
+  ADD_CONTACT_ERROR,
+  DELETE_CONTACT_REQUEST,
+  DELETE_CONTACT_SUCCESS,
+  DELETE_CONTACT_ERROR,
+  FILTER_CONTACT,
+} from './contacts-types';
 
-const fetchContactsRequest = createAction('contacts/fetchContactsRequest');
-const fetchContactsSuccess = createAction('contacts/fetchContactsSuccess');
-const fetchContactsError = createAction('contacts/fetchContactsError');
+export const fetchContactsRequest = createAction(FETCH_CONTACTS_REQUEST);
+export const fetchContactsSuccess = createAction(FETCH_CONTACTS_SUCCESS);
+export const fetchContactsError = createAction(FETCH_CONTACTS_ERROR);
 
-const addContactsRequest = createAction('contacts/addContactsRequest');
-const addContactsSuccess = createAction('contacts/addContactsSuccess');
-const addContactsError = createAction('contacts/addContactsError');
+export const addContactRequest = createAction(ADD_CONTACT_REQUEST);
+export const addContactSuccess = createAction(ADD_CONTACT_SUCCESS);
+export const addContactError = createAction(ADD_CONTACT_ERROR);
 
-const deleteContactsRequest = createAction('contacts/deleteContactsRequest');
-const deleteContactsSuccess = createAction('contacts/deleteContactsSuccess');
-const deleteContactsError = createAction('contacts/deleteContactsError');
+export const deleteContactRequest = createAction(DELETE_CONTACT_REQUEST);
+export const deleteContactSuccess = createAction(DELETE_CONTACT_SUCCESS);
+export const deleteContactError = createAction(DELETE_CONTACT_ERROR);
 
-const editContactsRequest = createAction('contacts/editContactsRequest');
-const editContactsSuccess = createAction('contacts/editContactsSuccess');
-const editContactsError = createAction('contacts/editContactsError');
-
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
-  fetchContactsRequest,
-  fetchContactsSuccess,
-  fetchContactsError,
-  addContactsRequest,
-  addContactsSuccess,
-  addContactsError,
-  deleteContactsRequest,
-  deleteContactsSuccess,
-  deleteContactsError,
-  editContactsRequest,
-  editContactsSuccess,
-  editContactsError,
-  changeFilter,
-};
+export const filterContact = createAction(FILTER_CONTACT);
