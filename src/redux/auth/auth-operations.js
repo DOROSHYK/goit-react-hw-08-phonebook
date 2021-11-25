@@ -16,6 +16,7 @@ import {
 import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
+// axios.defaults.baseURL = "http://localhost:4040";
 
 const token = {
   set(token) {
