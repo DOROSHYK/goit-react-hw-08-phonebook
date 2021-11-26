@@ -10,4 +10,4 @@ export const DELETE_CONTACT_REQUEST = 'contacts/deleteContactRequest';
 export const DELETE_CONTACT_SUCCESS = 'contacts/deleteContactSuccess';
 export const DELETE_CONTACT_ERROR = 'contacts/deleteContactError';
 
-export const FILTER_CONTACT = 'contacts/filtor';
+export const FILTER_CONTACT = 'contacts/filter';
